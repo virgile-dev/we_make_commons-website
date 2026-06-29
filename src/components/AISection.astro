@@ -1,0 +1,170 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+
+const studyUrl = 'https://www.hbs.edu/faculty/Pages/item.aspx?num=65230';
+const docsContribUrl = 'https://github.com/suitenumerique/docs/blob/main/CONTRIBUTING.md';
+---
+
+<section id="ai" class="py-24 bg-zinc-950 relative overflow-hidden">
+  <!-- Subtle grid background -->
+  <div
+    class="absolute inset-0 opacity-[0.03]"
+    style="background-image: linear-gradient(rgba(255,229,0,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,229,0,0.5) 1px, transparent 1px); background-size: 32px 32px;"
+  ></div>
+
+  <div class="relative max-w-5xl mx-auto px-4">
+    <p class="text-wmc-yellow text-sm font-semibold tracking-widest uppercase mb-4">
+      {lang === 'fr' ? 'Communs & IA' : 'Commons & AI'}
+    </p>
+
+    <h2 class="font-display text-3xl md:text-5xl font-bold mb-6 leading-tight">
+      {
+        lang === 'fr' ? (
+          <>
+            Les communs n'ont jamais été aussi
+            <span class="text-wmc-yellow"> importants</span>
+          </>
+        ) : (
+          <>
+            Commons have never mattered
+            <span class="text-wmc-yellow"> more</span>
+          </>
+        )
+      }
+    </h2>
+
+    <p class="text-zinc-300 text-lg max-w-2xl mb-14 leading-relaxed">
+      {
+        lang === 'fr'
+          ? "L'essor de l'IA donne encore plus de sens à We Make Commons. Les communs numériques sont faits par des humains — et ça ne changera pas."
+          : 'The rise of AI makes We Make Commons more relevant than ever. Digital commons are made by humans — and that is not going to change.'
+      }
+    </p>
+
+    <div class="grid md:grid-cols-2 gap-6 mb-14">
+      <!-- Double-edged sword -->
+      <div class="bg-zinc-900 rounded-2xl p-7 border border-zinc-800">
+        <div class="text-3xl mb-4">⚔️</div>
+        <h3 class="font-display font-bold text-xl mb-3 text-white">
+          {lang === 'fr' ? 'Une arme à double tranchant' : 'A double-edged sword'}
+        </h3>
+        <p class="text-zinc-400 leading-relaxed text-sm">
+          {
+            lang === 'fr'
+              ? "L'IA peut abaisser les barrières à la contribution et attirer de nouveaux profils vers les communs. Mais elle met aussi une pression immense sur les mainteneur·se·s existant·e·s, qui se retrouvent submergé·e·s de pull requests et d'issues générées automatiquement — souvent sans que leur auteur·ice ne comprenne vraiment ce qu'il ou elle soumet."
+              : 'AI can lower the barrier to contribution and bring new people to commons. But it also puts enormous pressure on existing maintainers, who get flooded with auto-generated pull requests and issues — often submitted by people who don\'t fully understand what they\'re contributing.'
+          }
+        </p>
+      </div>
+
+      <!-- Stat card -->
+      <div
+        class="bg-zinc-900 rounded-2xl p-7 border border-zinc-800 flex flex-col justify-between"
+      >
+        <div>
+          <div class="text-3xl mb-4">📊</div>
+          <h3 class="font-display font-bold text-xl mb-3 text-white">
+            {lang === 'fr' ? 'Une réalité chiffrée' : 'A stark reality'}
+          </h3>
+          <p class="text-zinc-400 leading-relaxed text-sm mb-5">
+            {
+              lang === 'fr' ? (
+                <>
+                  Selon une étude de la Harvard Business School (2024), <strong class="text-white">5 % des développeur·se·s génèrent plus de 95 % de la valeur</strong> des logiciels open source. Ces quelques milliers de personnes font tourner une infrastructure numérique estimée à 8 800 milliards de dollars.
+                </>
+              ) : (
+                <>
+                  According to a Harvard Business School study (2024), <strong class="text-white">5% of developers generate over 95% of the value</strong> in open source software. A few thousand people maintain a digital infrastructure worth an estimated $8.8 trillion.
+                </>
+              )
+            }
+          </p>
+        </div>
+        <a
+          href={studyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-xs text-zinc-500 hover:text-wmc-yellow transition-colors flex items-center gap-1.5"
+        >
+          🔗 Hoffmann, Nagle & Zhou — <em>The Value of Open Source Software</em>, HBS 2024 ↗
+        </a>
+      </div>
+    </div>
+
+    <!-- Central message -->
+    <div
+      class="rounded-2xl border-2 border-wmc-yellow/40 bg-zinc-900 p-8 md:p-12 text-center mb-10"
+    >
+      <p class="font-display font-bold text-2xl md:text-3xl leading-snug mb-4">
+        {
+          lang === 'fr' ? (
+            <>
+              "La technologie est faite{' '}
+              <span class="text-wmc-yellow">par des humains</span>,{' '}
+              <span class="text-wmc-yellow">pour des humains</span>"
+            </>
+          ) : (
+            <>
+              "The tech is{' '}
+              <span class="text-wmc-yellow">by humans</span>,{' '}
+              <span class="text-wmc-yellow">for humans</span>"
+            </>
+          )
+        }
+      </p>
+      <p class="text-zinc-400 max-w-2xl mx-auto text-sm leading-relaxed">
+        {
+          lang === 'fr' ? (
+            <>
+              Alors que l'IA s'intègre dans nos flux de travail, il est plus que jamais nécessaire de reconnaître et de célébrer celles et ceux qui fabriquent les communs. Comme le rappelle le projet La Suite Numérique dans{' '}
+              <a
+                href={docsContribUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-wmc-yellow hover:underline"
+              >
+                ses directives de contribution
+              </a>{' '}
+              : "Les contributions autonomes d'agents ou de pipelines non-humains ne sont pas les bienvenues." Ce qui compte, c'est la responsabilité humaine derrière chaque contribution.
+            </>
+          ) : (
+            <>
+              As AI becomes part of our workflows, it matters more than ever to recognise and celebrate the humans who make the commons. As the La Suite Numérique project puts it in{' '}
+              <a
+                href={docsContribUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="text-wmc-yellow hover:underline"
+              >
+                their contributing guidelines
+              </a>
+              : "Autonomous agents, agentic pipelines, or any non-human contributions are not welcome." What matters is the human accountability behind every contribution.
+            </>
+          )
+        }
+      </p>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+      <p class="text-zinc-500 text-sm mb-5">
+        {
+          lang === 'fr'
+            ? 'Qu\'il ou elle ait utilisé l\'IA ou non — si un·e humain·e a compris, vérifié et signé sa contribution, il ou elle mérite d\'être célébré·e.'
+            : 'Whether or not they used AI — if a human understood, reviewed and signed off on their contribution, they deserve to be celebrated.'
+        }
+      </p>
+      <a
+        href="https://grist.liiib.re/o/we-make-commons/forms/a4AEHWqiSqh33j3KeMHfTf/8"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-wmc-yellow text-black font-bold px-8 py-4 rounded-xl hover:scale-105 transition-transform shadow-lg shadow-yellow-400/20"
+      >
+        ✊ {lang === 'fr' ? 'Je suis un·e humain·e qui contribue' : 'I am a human who contributes'}
+      </a>
+    </div>
+  </div>
+</section>
