@@ -1,0 +1,88 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+const base = (import.meta.env.BASE_URL + '/').replace('//', '/');
+
+const organizer = {
+  name: 'Code for France',
+  url: 'https://codefor.fr/',
+  img: `${base}partner-codeforfrance.png`,
+};
+
+const supporters = [
+  { name: 'Decidim', url: 'https://decidim.org/', img: `${base}partner-decidim.png`, flag: '🇪🇸' },
+  { name: 'Open Source Politics', url: 'https://opensourcepolitics.eu/', img: `${base}partner-osp.png`, flag: '🇫🇷' },
+  { name: 'Octree', url: 'https://octree.ch/', img: `${base}partner-octree.jpg`, flag: '🇨🇭' },
+  { name: 'Indie Hosters', url: 'https://indiehosters.net/', img: `${base}partner-indiehosters.png`, flag: '🇫🇷' },
+  { name: 'Wikimedia France', url: 'https://www.wikimedia.fr/', img: `${base}partner-wikimedia.png`, flag: '🇫🇷' },
+  { name: 'Démocratie Ouverte', url: 'https://www.democratieouverte.org/', img: `${base}partner-democratie-ouverte.jpg`, flag: '🇫🇷' },
+  { name: 'Penpot', url: 'https://penpot.app/', img: `${base}partner-penpot.png`, flag: '🇪🇸' },
+];
+---
+
+<section id="partners" class="py-24 bg-zinc-900">
+  <div class="max-w-5xl mx-auto px-4">
+    <p class="text-wmc-yellow text-sm font-semibold tracking-widest uppercase mb-4">
+      {lang === 'fr' ? 'Organisations' : 'Organizations'}
+    </p>
+    <h2 class="font-display text-3xl md:text-4xl font-bold mb-12 leading-tight">
+      {
+        lang === 'fr'
+          ? 'Cette campagne est portée et soutenue par'
+          : 'This campaign is organized and supported by'
+      }
+    </h2>
+
+    <!-- Organizer -->
+    <div class="mb-10">
+      <p class="text-zinc-500 text-xs uppercase tracking-widest mb-4">
+        {lang === 'fr' ? 'Organisation' : 'Organizer'}
+      </p>
+      <a
+        href={organizer.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-4 bg-zinc-800 rounded-xl px-6 py-4 hover:bg-zinc-700 transition-colors group"
+      >
+        <img
+          src={organizer.img}
+          alt={organizer.name}
+          class="h-10 w-auto object-contain"
+          onerror="this.style.display='none'"
+        />
+        <span class="font-semibold text-white group-hover:text-wmc-yellow transition-colors">
+          {organizer.name} 🇫🇷
+        </span>
+      </a>
+    </div>
+
+    <!-- Supporters -->
+    <p class="text-zinc-500 text-xs uppercase tracking-widest mb-4">
+      {lang === 'fr' ? 'Avec le soutien de' : 'With the support of'}
+    </p>
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {
+        supporters.map((p) => (
+          <a
+            href={p.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="flex flex-col items-center gap-3 bg-zinc-800 rounded-xl px-4 py-5 hover:bg-zinc-700 hover:ring-1 hover:ring-wmc-yellow/40 transition-all group"
+          >
+            <img
+              src={p.img}
+              alt={p.name}
+              class="h-10 w-auto object-contain grayscale group-hover:grayscale-0 transition-all"
+              onerror="this.style.display='none'"
+            />
+            <span class="text-zinc-400 text-xs text-center group-hover:text-white transition-colors">
+              {p.name} {p.flag}
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>

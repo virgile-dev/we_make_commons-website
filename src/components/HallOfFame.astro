@@ -1,0 +1,830 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+---
+
+<section id="hall-of-fame" class="py-24 bg-zinc-950" data-lang={lang}>
+  <div class="max-w-7xl mx-auto px-4">
+    <!-- Header -->
+    <div class="mb-10">
+      <p
+        class="text-wmc-yellow text-sm font-semibold tracking-widest uppercase mb-4"
+      >
+        {lang === 'fr' ? 'Tableau d\'honneur' : 'Hall of Fame'}
+      </p>
+      <h2 class="font-display text-3xl md:text-5xl font-bold leading-tight">
+        👏
+        {
+          lang === 'fr'
+            ? 'Les contributeur·ice·s vérifié·e·s'
+            : 'Verified contributors'
+        }
+        <span id="hof-count" class="text-zinc-600 text-2xl font-normal ml-2"
+        ></span>
+      </h2>
+      <p class="text-zinc-400 mt-3 max-w-xl">
+        {
+          lang === 'fr'
+            ? 'Chaque profil a été vérifié par notre équipe. Un grand bravo à elles et eux ! 👏'
+            : 'Every profile has been verified by our team. A big shout out to all of them! 👏'
+        }
+      </p>
+    </div>
+
+    <!-- View toggle -->
+    <div class="flex gap-2 mb-8" id="hof-view-toggle" role="tablist">
+      <button
+        data-view="list"
+        role="tab"
+        aria-selected="true"
+        class="hof-view-btn hof-view-btn--active"
+      >
+        📋 {lang === 'fr' ? 'Liste' : 'List'}
+      </button>
+      <button
+        data-view="card"
+        role="tab"
+        aria-selected="false"
+        class="hof-view-btn"
+      >
+        🎲 {lang === 'fr' ? 'Aléatoire' : 'Random'}
+      </button>
+      <button
+        data-view="map"
+        role="tab"
+        aria-selected="false"
+        class="hof-view-btn"
+      >
+        🗺 Map
+      </button>
+    </div>
+
+    <!-- Loading -->
+    <div id="hof-loading" class="py-24 text-center">
+      <div
+        class="inline-block w-8 h-8 border-4 border-wmc-yellow border-t-transparent rounded-full animate-spin mb-4"
+      >
+      </div>
+      <p class="text-zinc-500">
+        {lang === 'fr' ? 'Chargement…' : 'Loading…'}
+      </p>
+    </div>
+
+    <!-- Error -->
+    <div id="hof-error" class="hidden py-16 text-center">
+      <p class="text-red-400">
+        {
+          lang === 'fr'
+            ? 'Impossible de charger les données.'
+            : 'Failed to load contributors.'
+        }
+      </p>
+    </div>
+
+    <!-- ── LIST VIEW ── -->
+    <div id="view-list" class="hidden" role="tabpanel">
+      <!-- Filters -->
+      <div
+        id="hof-filters"
+        class="flex flex-wrap gap-2 mb-5"
+        aria-label="Filter by type"
+      >
+      </div>
+      <!-- Stats -->
+      <p id="list-stats" class="text-zinc-500 text-sm mb-6"></p>
+      <!-- Grid -->
+      <div
+        id="contributors-grid"
+        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3"
+      >
+      </div>
+    </div>
+
+    <!-- ── RANDOM CARD VIEW ── -->
+    <div id="view-card" class="hidden" role="tabpanel">
+      <div class="flex flex-col items-center">
+        <div id="spotlight-card" class="w-full max-w-sm"></div>
+        <button
+          id="shuffle-btn"
+          class="mt-6 inline-flex items-center gap-2 bg-wmc-yellow text-black font-bold px-6 py-3 rounded-xl hover:scale-105 transition-transform"
+        >
+          🎲
+          {
+            lang === 'fr'
+              ? 'Découvrir un·e autre contributeur·ice'
+              : 'Discover another contributor'
+          }
+        </button>
+        <p id="card-counter" class="text-zinc-600 text-sm mt-3"></p>
+      </div>
+    </div>
+
+    <!-- ── MAP VIEW ── -->
+    <div id="view-map" class="hidden" role="tabpanel">
+      <div
+        id="contributors-map"
+        class="rounded-2xl overflow-hidden border border-zinc-800"
+        style="height: 520px;"
+      >
+      </div>
+      <div
+        id="map-stats"
+        class="mt-4 flex flex-wrap gap-6 text-sm text-zinc-500"
+      >
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  /* -- View toggle buttons -- */
+  .hof-view-btn {
+    padding: 8px 18px;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, transform 0.1s;
+    background: #27272a;
+    color: #a1a1aa;
+  }
+  .hof-view-btn:hover:not(.hof-view-btn--active) {
+    background: #3f3f46;
+    color: #fff;
+  }
+  .hof-view-btn--active {
+    background: #ffe500;
+    color: #000;
+  }
+
+  /* -- Filter buttons -- */
+  .hof-filter-btn {
+    padding: 5px 12px;
+    font-size: 12px;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    background: #27272a;
+    color: #a1a1aa;
+  }
+  .hof-filter-btn:hover:not(.hof-filter-btn--active) {
+    background: #3f3f46;
+    color: #fff;
+  }
+  .hof-filter-btn--active {
+    background: #ffe500;
+    color: #000;
+    font-weight: 600;
+  }
+
+  /* -- Contributor card (list view) -- */
+  .hof-card {
+    background: #18181b;
+    border-radius: 12px;
+    padding: 16px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    transition: box-shadow 0.2s, transform 0.15s;
+    cursor: default;
+  }
+  .hof-card:hover {
+    box-shadow: 0 0 0 1.5px rgba(255, 229, 0, 0.5);
+    transform: translateY(-2px);
+  }
+  .hof-avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .hof-avatar-initials {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: #ffe500;
+    color: #000;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+  }
+  .hof-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  .hof-card-location {
+    font-size: 11px;
+    color: #71717a;
+    margin-bottom: 6px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+  }
+  .hof-type-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    background: #27272a;
+    color: #fde68a;
+    padding: 2px 7px;
+    border-radius: 9999px;
+    margin: 1px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .hof-card-link {
+    font-size: 11px;
+    color: #52525b;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    margin-top: 8px;
+    transition: color 0.15s;
+  }
+  .hof-card-link:hover {
+    color: #ffe500;
+  }
+
+  /* -- Spotlight card (random view) -- */
+  .hof-spotlight {
+    background: #18181b;
+    border-radius: 20px;
+    padding: 36px 32px;
+    text-align: center;
+    border: 1px solid rgba(255, 229, 0, 0.25);
+    box-shadow: 0 20px 60px rgba(255, 229, 0, 0.06);
+  }
+  .hof-spotlight-avatar {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #ffe500;
+    margin: 0 auto 20px;
+    display: block;
+  }
+  .hof-spotlight-initials {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    background: #ffe500;
+    color: #000;
+    font-weight: 800;
+    font-size: 2.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+    border: 3px solid #ffe500;
+  }
+  .hof-spotlight-name {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 4px;
+  }
+  .hof-spotlight-pseudo {
+    font-size: 14px;
+    color: #71717a;
+    margin-bottom: 14px;
+  }
+  .hof-spotlight-location {
+    font-size: 15px;
+    color: #d4d4d8;
+    margin-bottom: 14px;
+  }
+  .hof-spotlight-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px;
+    margin-bottom: 24px;
+  }
+  .hof-spotlight-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    background: #27272a;
+    color: #fde68a;
+    padding: 4px 10px;
+    border-radius: 9999px;
+  }
+  .hof-spotlight-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #ffe500;
+    color: #000;
+    font-weight: 700;
+    font-size: 15px;
+    padding: 12px 26px;
+    border-radius: 12px;
+    text-decoration: none;
+    transition: transform 0.15s;
+  }
+  .hof-spotlight-cta:hover {
+    transform: scale(1.04);
+  }
+
+  /* -- Map markers -- */
+  .wmc-pin {
+    width: 34px;
+    height: 34px;
+    background: #ffe500;
+    border: 2px solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    transition: transform 0.1s;
+  }
+  .wmc-pin:hover {
+    transform: scale(1.15);
+  }
+  .wmc-cluster {
+    width: 40px;
+    height: 40px;
+    background: #ffe500;
+    border: 3px solid #000;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 13px;
+    color: #000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  /* -- Leaflet popup dark theme -- */
+  .leaflet-popup-content-wrapper {
+    background: #18181b !important;
+    color: #fff !important;
+    border: 1px solid rgba(255, 229, 0, 0.3) !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+  }
+  .leaflet-popup-tip {
+    background: #18181b !important;
+  }
+  .leaflet-popup-close-button {
+    color: #a1a1aa !important;
+    font-size: 18px !important;
+    top: 8px !important;
+    right: 8px !important;
+  }
+  .leaflet-popup-close-button:hover {
+    color: #fff !important;
+    background: transparent !important;
+  }
+  .leaflet-container {
+    background: #0f0f14 !important;
+  }
+</style>
+
+<script>
+  const GRIST_URL =
+    'https://grist.liiib.re/api/docs/rprjQEq3gHEF/tables/Contributors_map/records';
+  const ATTACHMENT_BASE =
+    'https://grist.liiib.re/api/docs/rprjQEq3gHEF/attachments';
+
+  // ── Types ──────────────────────────────────────────────────────────────────
+
+  interface Contributor {
+    id: number;
+    name: string;
+    pseudo: string | null;
+    country: string;
+    location: string;
+    types: string[];
+    avatarId: number | null;
+    lat: number | null;
+    lng: number | null;
+    link: string;
+  }
+
+  // ── Data ──────────────────────────────────────────────────────────────────
+
+  function parseContributor(record: any): Contributor {
+    const f = record.fields;
+    const rawTypes: unknown[] = Array.isArray(f.type) ? f.type : [];
+    const types = rawTypes.filter((t) => t !== 'L' && t != null) as string[];
+    const avatarArr = Array.isArray(f.avatar) ? f.avatar : null;
+    const avatarId =
+      avatarArr && avatarArr.length > 1 ? Number(avatarArr[1]) : null;
+    return {
+      id: record.id,
+      name: String(f.name_or_pseudo || f.name || f.pseudo || 'Anonymous'),
+      pseudo: f.pseudo || null,
+      country: String(f.country_emoji || '').trim(),
+      location: String(f.location || ''),
+      types,
+      avatarId,
+      lat: typeof f.lat === 'number' ? f.lat : null,
+      lng: typeof f.long === 'number' ? f.long : null,
+      link: String(f.link_to_proof || '#'),
+    };
+  }
+
+  async function fetchContributors(): Promise<Contributor[]> {
+    const res = await fetch(GRIST_URL);
+    const data = await res.json();
+    return (data.records as any[])
+      .filter((r: any) => r.fields.status === '✅ approved')
+      .map(parseContributor);
+  }
+
+  // ── Helpers ───────────────────────────────────────────────────────────────
+
+  function avatarUrl(id: number) {
+    return `${ATTACHMENT_BASE}/${id}/download`;
+  }
+
+  function initials(name: string) {
+    return name
+      .split(/\s+/)
+      .map((w) => w[0])
+      .filter(Boolean)
+      .slice(0, 2)
+      .join('')
+      .toUpperCase();
+  }
+
+  /** Extract the leading emoji chars from a type string. */
+  function typeEmoji(s: string): string {
+    let emoji = '';
+    for (const char of s) {
+      const code = char.codePointAt(0) ?? 0;
+      if (code > 127 || char === '‍' || char === '️') {
+        emoji += char;
+      } else if (emoji.length > 0) {
+        break;
+      }
+    }
+    return emoji || '🤝';
+  }
+
+  /** Return the display label for a type string, localised. */
+  function typeLabel(s: string, lang: string): string {
+    // Strip leading emoji
+    const stripped = s.replace(/^[^\x20-\x7EÀ-ɏ]+\s*/u, '').trim();
+    const parts = stripped.split(' / ');
+    if (lang === 'fr' && parts.length > 1) return parts[1].trim();
+    return parts[0].trim();
+  }
+
+  function countryFlag(c: string) {
+    return c.split(' ')[0] ?? '';
+  }
+
+  // ── Avatar HTML ───────────────────────────────────────────────────────────
+
+  function avatarHtml(c: Contributor, size: 'sm' | 'lg' = 'sm') {
+    const cls = size === 'lg' ? 'hof-spotlight-initials' : 'hof-avatar-initials';
+    const imgCls = size === 'lg' ? 'hof-spotlight-avatar' : 'hof-avatar';
+    const ini = initials(c.name);
+    if (c.avatarId) {
+      return `
+        <img src="${avatarUrl(c.avatarId)}" alt="${c.name}"
+          class="${imgCls}"
+          onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+        <div class="${cls}" style="display:none">${ini}</div>`;
+    }
+    return `<div class="${cls}">${ini}</div>`;
+  }
+
+  // ── Card (list view) ──────────────────────────────────────────────────────
+
+  function cardHtml(c: Contributor, lang: string): string {
+    const loc = [countryFlag(c.country), c.location].filter(Boolean).join(' ');
+    const tags = c.types
+      .slice(0, 2)
+      .map(
+        (t) =>
+          `<span class="hof-type-tag">${typeEmoji(t)}&thinsp;${typeLabel(t, lang)}</span>`
+      )
+      .join('');
+    return `
+      <div class="hof-card">
+        ${avatarHtml(c, 'sm')}
+        <div class="hof-card-name" title="${c.name}">${c.name}</div>
+        ${loc ? `<div class="hof-card-location">${loc}</div>` : ''}
+        <div style="display:flex;flex-wrap:wrap;justify-content:center">${tags}</div>
+        <a href="${c.link}" target="_blank" rel="noopener noreferrer" class="hof-card-link">
+          🔗 ${lang === 'fr' ? 'Voir' : 'View'} ↗
+        </a>
+      </div>`;
+  }
+
+  // ── List view ─────────────────────────────────────────────────────────────
+
+  function initListView(contributors: Contributor[], lang: string) {
+    const filterBar = document.getElementById('hof-filters')!;
+    const grid = document.getElementById('contributors-grid')!;
+    const stats = document.getElementById('list-stats')!;
+
+    // Build type map (type → count)
+    const typeMap = new Map<string, number>();
+    contributors.forEach((c) =>
+      c.types.forEach((t) => typeMap.set(t, (typeMap.get(t) ?? 0) + 1))
+    );
+
+    let activeType: string | null = null;
+
+    function filtered() {
+      return activeType
+        ? contributors.filter((c) => c.types.includes(activeType!))
+        : contributors;
+    }
+
+    function renderGrid() {
+      const list = filtered();
+      stats.textContent = `${list.length} ${lang === 'fr' ? 'contributeur·ice·s' : 'contributors'}`;
+      grid.innerHTML = list.map((c) => cardHtml(c, lang)).join('');
+    }
+
+    // Render filter buttons
+    const allLabel = lang === 'fr' ? 'Tous' : 'All';
+    const buttons: string[] = [
+      `<button class="hof-filter-btn hof-filter-btn--active" data-type="">${allLabel} (${contributors.length})</button>`,
+    ];
+    [...typeMap.entries()]
+      .sort((a, b) => b[1] - a[1])
+      .forEach(([type, count]) => {
+        const emoji = typeEmoji(type);
+        const label = typeLabel(type, lang);
+        buttons.push(
+          `<button class="hof-filter-btn" data-type="${encodeURIComponent(type)}">${emoji} ${label} <span style="opacity:.5">${count}</span></button>`
+        );
+      });
+    filterBar.innerHTML = buttons.join('');
+
+    filterBar.addEventListener('click', (e) => {
+      const btn = (e.target as Element).closest<HTMLButtonElement>('.hof-filter-btn');
+      if (!btn) return;
+      filterBar
+        .querySelectorAll('.hof-filter-btn')
+        .forEach((b) => b.classList.remove('hof-filter-btn--active'));
+      btn.classList.add('hof-filter-btn--active');
+      const raw = btn.dataset.type ?? '';
+      activeType = raw ? decodeURIComponent(raw) : null;
+      renderGrid();
+    });
+
+    renderGrid();
+  }
+
+  // ── Random card view ──────────────────────────────────────────────────────
+
+  function initCardView(contributors: Contributor[], lang: string) {
+    const card = document.getElementById('spotlight-card')!;
+    const btn = document.getElementById('shuffle-btn')!;
+    const counter = document.getElementById('card-counter')!;
+
+    // Only complete contributors
+    const pool = contributors.filter((c) => c.types.length > 0 && c.link !== '#');
+    const seen = new Set<number>();
+    let idx = Math.floor(Math.random() * pool.length);
+    seen.add(idx);
+
+    function showCard(i: number) {
+      const c = pool[i];
+      const loc = [c.country, c.location].filter(Boolean).join(' · ');
+      const tags = c.types
+        .map(
+          (t) =>
+            `<span class="hof-spotlight-tag">${typeEmoji(t)}&thinsp;${typeLabel(t, lang)}</span>`
+        )
+        .join('');
+      card.innerHTML = `
+        <div class="hof-spotlight">
+          ${avatarHtml(c, 'lg')}
+          <div class="hof-spotlight-name">${c.name}</div>
+          ${c.pseudo && c.pseudo !== c.name ? `<div class="hof-spotlight-pseudo">@${c.pseudo}</div>` : ''}
+          ${loc ? `<div class="hof-spotlight-location">${loc}</div>` : ''}
+          <div class="hof-spotlight-tags">${tags}</div>
+          <a href="${c.link}" target="_blank" rel="noopener noreferrer" class="hof-spotlight-cta">
+            🔗 ${lang === 'fr' ? 'Voir sa contribution ↗' : 'See their contribution ↗'}
+          </a>
+        </div>`;
+      counter.textContent = `${seen.size} / ${pool.length} ${lang === 'fr' ? 'découvert·e·s' : 'discovered'}`;
+    }
+
+    card.style.transition = 'opacity 0.18s, transform 0.18s';
+    showCard(idx);
+
+    btn.addEventListener('click', () => {
+      if (seen.size >= pool.length) seen.clear();
+      let next: number;
+      do {
+        next = Math.floor(Math.random() * pool.length);
+      } while (seen.has(next));
+      seen.add(next);
+      idx = next;
+
+      card.style.opacity = '0';
+      card.style.transform = 'scale(0.96)';
+      setTimeout(() => {
+        showCard(idx);
+        card.style.opacity = '1';
+        card.style.transform = 'scale(1)';
+      }, 180);
+    });
+  }
+
+  // ── Map view ──────────────────────────────────────────────────────────────
+
+  let mapInstance: any = null;
+
+  function loadAsset(tag: 'link' | 'script', attr: string): Promise<void> {
+    return new Promise((resolve) => {
+      if (tag === 'link') {
+        const el = document.createElement('link');
+        el.rel = 'stylesheet';
+        el.href = attr;
+        el.onload = () => resolve();
+        document.head.appendChild(el);
+      } else {
+        const el = document.createElement('script');
+        el.src = attr;
+        el.onload = () => resolve();
+        document.head.appendChild(el);
+      }
+    });
+  }
+
+  async function ensureLeaflet() {
+    if ((window as any).L) return;
+    await loadAsset('link', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css');
+    await loadAsset(
+      'link',
+      'https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css'
+    );
+    await loadAsset('script', 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js');
+    await loadAsset(
+      'script',
+      'https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js'
+    );
+  }
+
+  async function initMapView(contributors: Contributor[], lang: string) {
+    await ensureLeaflet();
+    const L = (window as any).L;
+
+    const mapEl = document.getElementById('contributors-map')!;
+    const statsEl = document.getElementById('map-stats')!;
+
+    if (mapInstance) {
+      mapInstance.invalidateSize();
+      return;
+    }
+
+    const withCoords = contributors.filter((c) => c.lat && c.lng);
+
+    mapInstance = L.map(mapEl, { zoomControl: true }).setView([48, 10], 3);
+
+    L.tileLayer(
+      'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+      {
+        attribution:
+          '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 18,
+      }
+    ).addTo(mapInstance);
+
+    const cluster = L.markerClusterGroup({
+      iconCreateFunction: (c: any) =>
+        L.divIcon({
+          html: `<div class="wmc-cluster">${c.getChildCount()}</div>`,
+          className: '',
+          iconSize: [40, 40],
+        }),
+      showCoverageOnHover: false,
+    });
+
+    withCoords.forEach((c) => {
+      const emoji = c.types.length > 0 ? typeEmoji(c.types[0]) : '🤝';
+      const icon = L.divIcon({
+        html: `<div class="wmc-pin">${emoji}</div>`,
+        className: '',
+        iconSize: [34, 34],
+        iconAnchor: [17, 17],
+        popupAnchor: [0, -18],
+      });
+
+      const loc = [c.country, c.location].filter(Boolean).join(' · ');
+      const tl = c.types.map((t) => typeLabel(t, lang)).join(', ');
+
+      const popup = `
+        <div style="min-width:160px;text-align:center;padding:6px 4px">
+          <strong style="font-size:14px;display:block;margin-bottom:4px">${c.name}</strong>
+          ${loc ? `<small style="color:#a1a1aa;display:block;margin-bottom:4px">${loc}</small>` : ''}
+          ${tl ? `<small style="color:#fde68a;display:block;margin-bottom:8px">${tl}</small>` : ''}
+          <a href="${c.link}" target="_blank" rel="noopener"
+             style="color:#ffe500;font-size:12px;text-decoration:none;font-weight:600">
+            🔗 ${lang === 'fr' ? 'Voir ↗' : 'View ↗'}
+          </a>
+        </div>`;
+
+      L.marker([c.lat!, c.lng!], { icon }).bindPopup(popup).addTo(cluster);
+    });
+
+    mapInstance.addLayer(cluster);
+
+    const countries = new Set(withCoords.map((c) => c.country).filter(Boolean));
+    statsEl.innerHTML = `
+      <span>🌍 <strong style="color:#fff">${withCoords.length}</strong> ${lang === 'fr' ? 'contributeur·ice·s sur la carte' : 'contributors on the map'}</span>
+      <span>🏳 <strong style="color:#fff">${countries.size}</strong> ${lang === 'fr' ? 'pays représentés' : 'countries represented'}</span>`;
+  }
+
+  // ── View switching ────────────────────────────────────────────────────────
+
+  function setupToggle(
+    contributors: Contributor[],
+    lang: string,
+    cardReady: boolean
+  ) {
+    const toggle = document.getElementById('hof-view-toggle')!;
+    let cardInitialized = cardReady;
+
+    toggle.addEventListener('click', async (e) => {
+      const btn = (e.target as Element).closest<HTMLButtonElement>('[data-view]');
+      if (!btn) return;
+      const view = btn.dataset.view!;
+
+      toggle.querySelectorAll('.hof-view-btn').forEach((b) => {
+        b.classList.remove('hof-view-btn--active');
+        (b as HTMLButtonElement).setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('hof-view-btn--active');
+      btn.setAttribute('aria-selected', 'true');
+
+      (['list', 'card', 'map'] as const).forEach((v) => {
+        document.getElementById(`view-${v}`)?.classList.add('hidden');
+      });
+      document.getElementById(`view-${view}`)?.classList.remove('hidden');
+
+      if (view === 'card' && !cardInitialized) {
+        initCardView(contributors, lang);
+        cardInitialized = true;
+      }
+      if (view === 'map') {
+        await initMapView(contributors, lang);
+      }
+    });
+  }
+
+  // ── Main ──────────────────────────────────────────────────────────────────
+
+  (async () => {
+    const section = document.getElementById('hall-of-fame')!;
+    const lang = (section.dataset.lang ?? 'en') as string;
+
+    try {
+      const contributors = await fetchContributors();
+
+      document.getElementById('hof-loading')!.classList.add('hidden');
+      document.getElementById('hof-count')!.textContent = `(${contributors.length})`;
+
+      // Init list view (default)
+      initListView(contributors, lang);
+      document.getElementById('view-list')!.classList.remove('hidden');
+
+      // Set up view switcher (card view lazy-initialized on first click)
+      setupToggle(contributors, lang, false);
+    } catch (err) {
+      console.error(err);
+      document.getElementById('hof-loading')!.classList.add('hidden');
+      document.getElementById('hof-error')!.classList.remove('hidden');
+    }
+  })();
+</script>

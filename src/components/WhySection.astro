@@ -1,0 +1,181 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+
+const pillars =
+  lang === 'fr'
+    ? [
+        {
+          icon: '📦',
+          title: 'Ressource',
+          desc: 'Code, données, connaissances, culture — des biens partagés librement.',
+        },
+        {
+          icon: '👥',
+          title: 'Communauté',
+          desc: 'Des contributeur·ice·s et utilisateur·ice·s qui font vivre la ressource.',
+        },
+        {
+          icon: '⚖️',
+          title: 'Gouvernance',
+          desc: 'Des règles collectives qui organisent le commun de façon ouverte.',
+        },
+      ]
+    : [
+        {
+          icon: '📦',
+          title: 'Resource',
+          desc: 'Code, data, knowledge, culture — freely shared digital goods.',
+        },
+        {
+          icon: '👥',
+          title: 'Community',
+          desc: 'Contributors and users who breathe life into the resource.',
+        },
+        {
+          icon: '⚖️',
+          title: 'Governance',
+          desc: 'Collective rules that organize the commons openly.',
+        },
+      ];
+---
+
+<section id="why" class="py-24 bg-zinc-900">
+  <div class="max-w-5xl mx-auto px-4">
+    <!-- Section label -->
+    <p class="text-wmc-yellow text-sm font-semibold tracking-widest uppercase mb-4">
+      {lang === 'fr' ? 'Pourquoi' : 'Why'}
+    </p>
+
+    <h2 class="font-display text-3xl md:text-5xl font-bold mb-6 leading-tight">
+      {
+        lang === 'fr' ? (
+          <>
+            Contributeur·ice·s,
+            <br />
+            nous vous <span class="text-wmc-yellow">aimons</span> ❤️
+          </>
+        ) : (
+          <>
+            Contributors,
+            <br />
+            we <span class="text-wmc-yellow">love</span> you ❤️
+          </>
+        )
+      }
+    </h2>
+
+    <!-- 3 pillars -->
+    <div class="grid md:grid-cols-3 gap-6 mb-16">
+      {
+        pillars.map((p) => (
+          <div class="bg-zinc-800 rounded-2xl p-6 border border-zinc-700">
+            <div class="text-3xl mb-3">{p.icon}</div>
+            <h3 class="font-display font-bold text-lg mb-2 text-wmc-yellow">
+              {p.title}
+            </h3>
+            <p class="text-zinc-400 text-sm leading-relaxed">{p.desc}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Body copy -->
+    <div class="grid md:grid-cols-2 gap-12 items-start">
+      <div>
+        <p class="text-zinc-300 leading-relaxed mb-4">
+          {
+            lang === 'fr'
+              ? 'Les contributeur·ice·s ne représentent qu\'une infime fraction des personnes qui bénéficient de la ressource. Par exemple, en septembre 2025, il y avait'
+              : 'Contributors only make up a tiny fraction of those who benefit from the resource. For example, in September 2025, there were'
+          }
+          <strong class="text-white">
+            {
+              lang === 'fr'
+                ? ' 0,041 % d\'éditeurs pour 734 millions de visiteurs sur mobile'
+                : ' 0.041% editors for 734 million unique mobile visitors'
+            }
+          </strong>
+          {
+            lang === 'fr'
+              ? ' sur Wikipédia en anglais.'
+              : ' on English Wikipedia.'
+          }
+        </p>
+        <p class="text-zinc-300 leading-relaxed">
+          {
+            lang === 'fr'
+              ? 'Sans contributeur·ice·s, aucune ressource ne pourrait exister. Et beaucoup d\'entre elles et eux s\'investissent sur leur temps libre !'
+              : 'Without contributors, there wouldn\'t be a resource to share. And many of them do it on their own spare time!'
+          }
+        </p>
+        <p class="text-wmc-yellow font-semibold mt-6 text-lg">
+          {
+            lang === 'fr'
+              ? 'À notre avis, les contributeur·ice·s ne sont pas assez célébré·e·s !'
+              : 'In our opinion, contributors are not celebrated enough!'
+          }
+        </p>
+      </div>
+
+      <div>
+        <!-- Policy x Contributors callout -->
+        <div
+          class="bg-zinc-950 rounded-2xl p-6 border-l-4 border-wmc-yellow mb-6"
+        >
+          <p class="font-display font-bold text-xl mb-3">
+            {lang === 'fr' ? 'Politiques × Contributeur·ice·s' : 'Policy × Contributors'}
+            <span class="text-wmc-yellow"> = ✨</span>
+          </p>
+          <p class="text-zinc-400 text-sm leading-relaxed">
+            {
+              lang === 'fr'
+                ? 'Pour vraiment comprendre les biens communs numériques, il faut contribuer. Quand décideur·se·s et contributeur·ice·s se réunissent et apprennent les un·e·s des autres, tout devient possible.'
+                : 'To truly understand digital commons, one must contribute. When policy people and contributors get together and learn from each other, magic happens.'
+            }
+          </p>
+        </div>
+
+        <!-- Contributions are open to all -->
+        <div class="bg-zinc-800 rounded-2xl p-6">
+          <p class="font-semibold text-white mb-2">
+            {
+              lang === 'fr'
+                ? 'La contribution est ouverte à toutes et tous'
+                : 'Contributions are open to everyone'
+            }
+          </p>
+          <p class="text-zinc-400 text-sm leading-relaxed">
+            {
+              lang === 'fr'
+                ? 'Peu importe les compétences techniques, le genre, l\'âge ou le parcours : contribuer peut être simple, rapide et accessible.'
+                : 'Regardless of technical skills, gender, age, or background — contributions can be quick, easy, and accessible to everyone.'
+            }
+          </p>
+          <!-- Types list -->
+          <div class="flex flex-wrap gap-2 mt-4">
+            {
+              [
+                '👨‍💻 Developer',
+                '🧝 Translator',
+                '👨‍🎨 Designer',
+                '👨‍🏫 Educator',
+                '👨‍🔬 Beta tester',
+                '🧑‍🎤 Community',
+                '👨‍🚀 Product',
+                '✍️ Writer',
+                '🙋 Engaged user',
+              ].map((t) => (
+                <span class="text-xs bg-zinc-700 text-zinc-300 px-2 py-1 rounded-full">
+                  {t}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

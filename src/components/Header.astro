@@ -1,0 +1,138 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+const base = (import.meta.env.BASE_URL + '/').replace('//', '/');
+
+const navItems = lang === 'fr'
+  ? [
+      { href: '#why', label: 'Pourquoi' },
+      { href: '#how', label: 'Comment' },
+      { href: '#what', label: 'Quoi' },
+      { href: '#hall-of-fame', label: 'Tableau d\'honneur' },
+      { href: '#join', label: 'Rejoindre' },
+    ]
+  : [
+      { href: '#why', label: 'Why' },
+      { href: '#how', label: 'How' },
+      { href: '#what', label: 'What' },
+      { href: '#hall-of-fame', label: 'Hall of Fame' },
+      { href: '#join', label: 'Join' },
+    ];
+---
+
+<header
+  class="fixed top-0 left-0 right-0 z-50 bg-zinc-950/90 backdrop-blur-sm border-b border-zinc-800"
+>
+  <div class="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+    <!-- Logo -->
+    <a href={base} class="flex-shrink-0">
+      <img
+        src={`${base}logo.png`}
+        alt="We Make Commons"
+        class="h-9 w-auto"
+      />
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-6">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="text-sm text-zinc-400 hover:text-white transition-colors"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <!-- Right: lang toggle + CTA -->
+    <div class="flex items-center gap-3">
+      <!-- Language toggle -->
+      <div class="flex items-center gap-1 text-sm">
+        <a
+          href={base}
+          class={`px-2 py-1 rounded transition-colors ${lang === 'en' ? 'text-black bg-wmc-yellow font-semibold' : 'text-zinc-400 hover:text-white'}`}
+        >
+          EN
+        </a>
+        <a
+          href={`${base}fr/`}
+          class={`px-2 py-1 rounded transition-colors ${lang === 'fr' ? 'text-black bg-wmc-yellow font-semibold' : 'text-zinc-400 hover:text-white'}`}
+        >
+          FR
+        </a>
+      </div>
+
+      <!-- CTA -->
+      <a
+        href="https://grist.liiib.re/o/we-make-commons/forms/a4AEHWqiSqh33j3KeMHfTf/8"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="hidden md:inline-flex items-center gap-1.5 bg-wmc-yellow text-black text-sm font-bold px-4 py-2 rounded-lg hover:scale-105 transition-transform"
+      >
+        {lang === 'fr' ? '✊ Contribuer' : '✊ Contribute'}
+      </a>
+
+      <!-- Mobile menu button -->
+      <button
+        id="mobile-menu-btn"
+        class="md:hidden text-zinc-400 hover:text-white p-1"
+        aria-label="Menu"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"
+          ></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="hidden md:hidden border-t border-zinc-800 bg-zinc-950 px-4 py-4"
+  >
+    {
+      navItems.map((item) => (
+        <a
+          href={item.href}
+          class="block py-2.5 text-zinc-300 hover:text-white transition-colors"
+        >
+          {item.label}
+        </a>
+      ))
+    }
+    <a
+      href="https://grist.liiib.re/o/we-make-commons/forms/a4AEHWqiSqh33j3KeMHfTf/8"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-3 block w-full text-center bg-wmc-yellow text-black font-bold py-2.5 rounded-lg"
+    >
+      {lang === 'fr' ? '✊ Contribuer' : '✊ Contribute'}
+    </a>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  btn?.addEventListener('click', () => menu?.classList.toggle('hidden'));
+  // Close on nav link click
+  menu?.querySelectorAll('a').forEach((a) =>
+    a.addEventListener('click', () => menu.classList.add('hidden'))
+  );
+</script>

@@ -1,0 +1,158 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+
+const submitUrl =
+  'https://grist.liiib.re/o/we-make-commons/forms/a4AEHWqiSqh33j3KeMHfTf/8';
+
+const steps =
+  lang === 'fr'
+    ? [
+        {
+          n: '01',
+          title: 'Soumettez un lien',
+          desc: 'Remplissez le formulaire avec un lien vers votre contribution publique : profil GitHub, article Wikipédia, carte OpenStreetMap, forum communautaire…',
+        },
+        {
+          n: '02',
+          title: 'Nous vérifions',
+          desc: 'Notre équipe examine votre preuve de contribution. On vérifie que le lien montre bien une contribution à une ressource partagée.',
+        },
+        {
+          n: '03',
+          title: 'Vous êtes approuvé·e',
+          desc: 'Votre profil apparaît dans le registre public. Vous pouvez aussi aider à vérifier les nouvelles candidatures.',
+        },
+        {
+          n: '04',
+          title: 'Récupérez vos goodies',
+          desc: 'Venez nous voir en conférence pour récupérer votre pin\'s et votre sticker holographique édition limitée !',
+        },
+      ]
+    : [
+        {
+          n: '01',
+          title: 'Submit a link',
+          desc: 'Fill in the form with a link to your public contribution: GitHub profile, Wikipedia article, OpenStreetMap handle, community forum…',
+        },
+        {
+          n: '02',
+          title: 'We review it',
+          desc: 'Our team examines your proof of contribution. We verify that the link shows a contribution to a shared resource.',
+        },
+        {
+          n: '03',
+          title: 'You are approved',
+          desc: 'Your profile appears in the public registry. You can also help review new applications.',
+        },
+        {
+          n: '04',
+          title: 'Collect your goodies',
+          desc: 'Come see us at a conference to collect your limited edition pin and holographic sticker!',
+        },
+      ];
+
+const proofExamples =
+  lang === 'fr'
+    ? ['Profil GitHub / GitLab', 'Compte OpenStreetMap', 'Compte Wikipédia', 'Forum communautaire']
+    : ['GitHub / GitLab profile', 'OpenStreetMap handle', 'Wikipedia account', 'Community forum'];
+
+const impostorTitle =
+  lang === 'fr' ? 'Syndrome de l\'imposteur ?' : 'Imposter syndrome?';
+const impostorText =
+  lang === 'fr'
+    ? 'Même si votre dernière contribution remonte à dix ans, sur un dépôt GitHub obscur ou un article Wikipédia très pointu — nous voulons vous inscrire dans le registre. Chaque contribution compte.'
+    : 'Even if you contributed 10 years ago, to an obscure GitHub repo or a very niche Wikipedia article — we want you in the registry. All contributions matter.';
+---
+
+<section id="how" class="py-24 bg-zinc-950">
+  <div class="max-w-5xl mx-auto px-4">
+    <p class="text-wmc-yellow text-sm font-semibold tracking-widest uppercase mb-4">
+      {lang === 'fr' ? 'Comment' : 'How'}
+    </p>
+    <h2 class="font-display text-3xl md:text-5xl font-bold mb-12 leading-tight">
+      {
+        lang === 'fr' ? (
+          <>
+            Soumettez votre{' '}
+            <span class="text-wmc-yellow">preuve de contribution</span>
+          </>
+        ) : (
+          <>
+            Submit your{' '}
+            <span class="text-wmc-yellow">proof of contribution</span>
+          </>
+        )
+      }
+    </h2>
+
+    <!-- Steps -->
+    <div class="grid md:grid-cols-2 gap-6 mb-12">
+      {
+        steps.map((step) => (
+          <div class="flex gap-5">
+            <div class="flex-shrink-0 font-display font-bold text-4xl text-wmc-yellow/20 leading-none select-none w-14">
+              {step.n}
+            </div>
+            <div>
+              <h3 class="font-display font-bold text-lg text-white mb-2">
+                {step.title}
+              </h3>
+              <p class="text-zinc-400 text-sm leading-relaxed">{step.desc}</p>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Proof examples -->
+    <div
+      class="bg-zinc-900 rounded-2xl p-6 border border-zinc-700 mb-8 flex flex-col md:flex-row gap-6 items-start"
+    >
+      <div class="flex-1">
+        <p class="font-semibold text-white mb-3">
+          {
+            lang === 'fr'
+              ? '🔗 Une preuve de contribution peut être :'
+              : '🔗 A proof of contribution can be:'
+          }
+        </p>
+        <ul class="space-y-2">
+          {
+            proofExamples.map((ex) => (
+              <li class="flex items-center gap-2 text-zinc-400 text-sm">
+                <span class="text-wmc-yellow">→</span> {ex}
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Imposter syndrome callout -->
+      <div
+        class="flex-1 bg-zinc-800 rounded-xl p-4 border-l-4 border-wmc-yellow"
+      >
+        <p class="font-semibold text-wmc-yellow text-sm mb-2">
+          {impostorTitle}
+        </p>
+        <p class="text-zinc-400 text-sm leading-relaxed">{impostorText}</p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center">
+      <a
+        href={submitUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-3 bg-wmc-yellow text-black font-bold text-lg px-10 py-4 rounded-xl hover:scale-105 transition-transform shadow-lg shadow-yellow-400/20"
+      >
+        👉
+        {lang === 'fr' ? 'Soumettre ma preuve de contribution' : 'Submit my proof of contribution'}
+        👈
+      </a>
+    </div>
+  </div>
+</section>

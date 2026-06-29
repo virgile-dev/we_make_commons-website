@@ -1,0 +1,118 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+const base = (import.meta.env.BASE_URL + '/').replace('//', '/');
+
+const submitUrl =
+  'https://grist.liiib.re/o/we-make-commons/forms/a4AEHWqiSqh33j3KeMHfTf/8';
+const hofUrl = '#hall-of-fame';
+---
+
+<section
+  class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-16 overflow-hidden bg-zinc-950"
+>
+  <!-- Background grid pattern -->
+  <div
+    class="absolute inset-0 opacity-5"
+    style="background-image: linear-gradient(rgba(255,229,0,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(255,229,0,0.3) 1px, transparent 1px); background-size: 48px 48px;"
+  >
+  </div>
+
+  <!-- Glow -->
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full opacity-10"
+    style="background: radial-gradient(ellipse, #FFE500 0%, transparent 70%);"
+  >
+  </div>
+
+  <div class="relative z-10 max-w-4xl mx-auto">
+    <!-- Logo -->
+    <div class="flex justify-center mb-10">
+      <img
+        src={`${base}logo.png`}
+        alt="We Make Commons"
+        class="w-56 md:w-72 drop-shadow-2xl"
+      />
+    </div>
+
+    <!-- Tagline -->
+    <h1 class="font-display text-4xl md:text-6xl font-bold leading-tight mb-6">
+      {
+        lang === 'fr' ? (
+          <>
+            Célébrons les <span class="text-wmc-yellow">contributeur·ice·s</span>{' '}
+            aux biens communs numériques
+          </>
+        ) : (
+          <>
+            Celebrating <span class="text-wmc-yellow">contributors</span> to
+            digital commons
+          </>
+        )
+      }
+    </h1>
+
+    <!-- Sub-tagline -->
+    <p class="text-zinc-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+      {
+        lang === 'fr'
+          ? 'Rejoignez le registre des contributeur·ice·s vérifié·e·s et recevez votre pin\'s édition limitée.'
+          : 'Join the registry of verified contributors and receive your limited edition pin.'
+      }
+    </p>
+
+    <!-- CTAs -->
+    <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+      <a
+        href={submitUrl}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 bg-wmc-yellow text-black font-bold text-lg px-8 py-4 rounded-xl hover:scale-105 transition-transform shadow-lg shadow-yellow-400/20"
+      >
+        ✊
+        {lang === 'fr' ? 'Soumettre ma contribution' : 'Submit my contribution'}
+      </a>
+      <a
+        href={hofUrl}
+        class="inline-flex items-center gap-2 border border-zinc-600 text-white font-semibold text-lg px-8 py-4 rounded-xl hover:border-zinc-400 transition-colors"
+      >
+        👏
+        {lang === 'fr' ? 'Voir le tableau d\'honneur' : 'See the Hall of Fame'}
+      </a>
+    </div>
+
+    <!-- Stats bar -->
+    <div
+      class="mt-14 flex flex-wrap justify-center gap-8 text-sm text-zinc-500"
+    >
+      <span>🌍 <strong class="text-white">17</strong> {lang === 'fr' ? 'pays' : 'countries'}</span>
+      <span
+        >👥 <strong class="text-white">128</strong>
+        {lang === 'fr' ? 'contributeur·ice·s vérifié·e·s' : 'verified contributors'}</span
+      >
+      <span>🤝 <strong class="text-white">12</strong> {lang === 'fr' ? 'types de contribution' : 'contribution types'}</span>
+    </div>
+  </div>
+
+  <!-- Scroll indicator -->
+  <div
+    class="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-600 animate-bounce"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-6 h-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M19 9l-7 7-7-7"
+      ></path>
+    </svg>
+  </div>
+</section>

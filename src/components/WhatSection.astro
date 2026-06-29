@@ -1,0 +1,97 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+const base = (import.meta.env.BASE_URL + '/').replace('//', '/');
+---
+
+<section id="what" class="py-24 bg-zinc-900 overflow-hidden">
+  <div class="max-w-5xl mx-auto px-4">
+    <p class="text-wmc-yellow text-sm font-semibold tracking-widest uppercase mb-4">
+      {lang === 'fr' ? 'Quoi' : 'What'}
+    </p>
+    <h2 class="font-display text-3xl md:text-5xl font-bold mb-4 leading-tight">
+      {
+        lang === 'fr' ? (
+          <>
+            Soyez <span class="text-wmc-yellow">fier·e</span> de contribuer
+          </>
+        ) : (
+          <>
+            Be <span class="text-wmc-yellow">proud</span> to be a contributor
+          </>
+        )
+      }
+    </h2>
+    <p class="text-zinc-400 max-w-2xl mb-14 leading-relaxed">
+      {
+        lang === 'fr'
+          ? 'Une fois votre preuve de contribution approuvée, vous recevrez une épinglette et un autocollant holographique en édition très limitée. En les portant lors de conférences, nous espérons susciter des conversations sur la joie et les défis de la contribution aux biens communs numériques.'
+          : 'Once your proof of contribution is approved, you\'ll receive a very limited edition pin and holographic sticker. As people wear them at conferences, we hope to spark conversations about the joy and challenges of contributing to digital commons.'
+      }
+    </p>
+
+    <!-- Products showcase -->
+    <div class="grid md:grid-cols-2 gap-8 items-center">
+      <!-- Pin front -->
+      <div class="group flex flex-col items-center">
+        <div
+          class="relative w-64 h-64 flex items-center justify-center mb-4"
+        >
+          <img
+            src={`${base}pin-front.png`}
+            alt={lang === 'fr' ? 'Face avant du pin\'s' : 'Pin front side'}
+            class="w-56 h-auto drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <p class="text-zinc-400 text-sm text-center">
+          {
+            lang === 'fr'
+              ? '🎖️ Face avant du pin\'s + visuel du sticker'
+              : '🎖️ Pin front side + sticker visual'
+          }
+        </p>
+      </div>
+
+      <!-- Pin back -->
+      <div class="group flex flex-col items-center">
+        <div
+          class="relative w-64 h-64 flex items-center justify-center mb-4"
+        >
+          <img
+            src={`${base}pin-back.png`}
+            alt={lang === 'fr' ? 'Face arrière du pin\'s' : 'Pin back side'}
+            class="w-56 h-auto drop-shadow-2xl group-hover:scale-105 transition-transform duration-300"
+          />
+        </div>
+        <p class="text-zinc-400 text-sm text-center">
+          {
+            lang === 'fr'
+              ? '🔄 Face arrière — toutes les formes de contribution'
+              : '🔄 Back side — all forms of contribution'
+          }
+        </p>
+      </div>
+    </div>
+
+    <!-- Callout -->
+    <div class="mt-14 bg-zinc-950 rounded-2xl p-8 border border-zinc-800 text-center max-w-2xl mx-auto">
+      <p class="text-3xl mb-4">🎖️ 👾</p>
+      <p class="font-display font-bold text-xl mb-3">
+        {
+          lang === 'fr'
+            ? 'Édition très limitée'
+            : 'Very limited edition'
+        }
+      </p>
+      <p class="text-zinc-400 text-sm leading-relaxed">
+        {
+          lang === 'fr'
+            ? 'Les goodies sont distribués en personne lors des conférences. Venez nous rencontrer pour récupérer les vôtres !'
+            : 'Goodies are distributed in person at conferences. Come meet us to collect yours!'
+        }
+      </p>
+    </div>
+  </div>
+</section>

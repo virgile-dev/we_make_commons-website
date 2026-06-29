@@ -1,0 +1,270 @@
+
+<!DOCTYPE html>
+<html lang="fr" class="no-js">
+  <head>
+    <title>Code for France</title>
+    <meta name="csrf-param" content="authenticity_token" />
+<meta name="csrf-token" content="hWhJd7O7rViwopZXUOT55Jwxz5PulIYUyvHlhaGAI+KYAHVoZjA1CaT2HSYYhcWzRHfkSWhpcZZpFmTXVeqNVA==" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="alternate" href="/404?locale=fr" hreflang="fr">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@CodeForFR">
+<meta name="twitter:title" content="Code for France">
+<meta name="twitter:description" content="Nous promouvons des idées et développons des outils au service d&#39;un monde numérique libre et ouvert offrant des opportunités à tou·te·s les citoyen·ne·s. Nos thématiques : Participation, Transparence &amp;amp; Communs numériquesADHÉRER">
+<meta name="twitter:image" content="https://codefor.fr/uploads/decidim/hero_homepage_content_block/background_image/1/open-democracy-ouv.jpg">
+
+<meta property="og:url" content="https://codefor.fr/img/logo.png">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Code for France">
+<meta property="og:description" content="Nous promouvons des idées et développons des outils au service d&#39;un monde numérique libre et ouvert offrant des opportunités à tou·te·s les citoyen·ne·s. Nos thématiques : Participation, Transparence &amp;amp; Communs numériquesADHÉRER">
+<meta property="og:image" content="https://codefor.fr/uploads/decidim/hero_homepage_content_block/background_image/1/open-democracy-ouv.jpg">
+
+<link rel="shortcut icon" type="image/x-icon" href="https://codefor.fr/uploads/decidim/organization/favicon/1/big_Capture_d_e%CC%81cran_2019-01-18_a%CC%80_11.57.54.png" sizes="152x152" /><link rel="shortcut icon" type="image/x-icon" href="https://codefor.fr/uploads/decidim/organization/favicon/1/medium_Capture_d_e%CC%81cran_2019-01-18_a%CC%80_11.57.54.png" sizes="64x64" /><link rel="shortcut icon" type="image/x-icon" href="https://codefor.fr/uploads/decidim/organization/favicon/1/small_Capture_d_e%CC%81cran_2019-01-18_a%CC%80_11.57.54.png" sizes="32x32" />
+<link rel="stylesheet" media="all" href="/assets/application-e38f686e865667bd1c09bc20335d396562098b4036f993696e939498107ff0de.css" />
+<script src="/assets/application-aa7a59a511da8ebf503ec2fa61f1b9d7845127c1191428e292d8cf17a81dd99c.js"></script>
+<script src="/assets/datepicker-locales/foundation-datepicker.fr-7cb3580422f55c62be6de9d0a5057de144012c16d465279e2fc4156f9986a5df.js"></script>
+
+  <script src="https://browser.sentry-cdn.com/4.6.4/bundle.min.js" crossorigin="anonymous"></script>
+  <script>
+    Sentry.init({
+      dsn: 'https://8aecfaa8aa3c440b832f68a0d8274c24@sentry.io/1374150'
+    });
+  </script>
+
+<style type="text/css">
+.highligted-content-banner::after{
+  background: none;
+}
+.footer-nav li:nth-child(3){display: none;}
+</style>
+
+
+<!-- Matomo -->
+<script type="text/javascript">
+  var _paq = window._paq || [];
+<!-- Debut - Obligation CNIL -->
+_paq.push([function() {
+    var self = this;
+    function getOriginalVisitorCookieTimeout() {
+        var now = new Date(),
+        nowTs = Math.round(now.getTime() / 1000),
+        visitorInfo = self.getVisitorInfo();
+        var createTs = parseInt(visitorInfo[2]);
+        var cookieTimeout = 33696000; // 13 mois en secondes
+        var originalTimeout = createTs + cookieTimeout - nowTs;
+        return originalTimeout;
+    }
+    this.setVisitorCookieTimeout( getOriginalVisitorCookieTimeout() );
+}]);
+<!-- Fin - Obligation CNIL -->
+  /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+  _paq.push(["setDoNotTrack",  true]);
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="https://argus.osp.cat/";
+    _paq.push(['setTrackerUrl', u+'matomo.php']);
+    _paq.push(['setSiteId', '37']);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'matomo.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<!-- End Matomo Code -->
+
+
+
+  </head>
+
+  <body>
+    
+      <div class="cookie-warning">
+    Ce site utilise des cookies. En continuant à parcourir le site, vous acceptez notre utilisation des cookies. En savoir plus à ce sujet <a target="_blank" href="/pages/terms-and-conditions">ici</a>.
+    <div class="cookie-warning__action">
+      <form class="button_to" method="get" action="/cookies/accept" data-remote="true"><button class="button tiny cookie-bar__button" type="submit">&quot;J&#39;accepte&quot;</button></form>
+    </div>
+  </div>
+
+    
+
+    
+<div class="off-canvas-wrapper">
+  <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper>
+    <div class="off-canvas position-right hide-for-large" data-position="right"
+         id="offCanvas" data-off-canvas>
+      <!-- Close button -->
+      <button class="close-button"
+              aria-label="Fermer le menu" type="button"
+              data-close>
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <!-- Menu -->
+      <div class="hide-for-medium" data-set="nav-holder"></div>
+      <div class="hide-for-medium usermenu-off-canvas-holder"
+           data-set="nav-login-holder"></div>
+    </div>
+    <div class="off-canvas-content" data-off-canvas-content>
+      <div class="footer-separator">
+        <!--separates the footer from the rest of the page,
+             creates a sticky footer-->
+        <!-- Topbar -->
+        <div class="title-bar">
+          <div class="row column topbar">
+            <div class="logo-wrapper">
+                <a href="https://codefor.fr/">
+      <img src="https://codefor.fr/uploads/decidim/organization/logo/1/medium_logo-code-for-france-alpha-gray.png" />
+</a>
+            </div>
+            <div class="show-for-medium" data-set="nav-search-holder">
+  <div class="topbar__search js-append">
+    <svg aria-label="Rechercher" role="img" class="icon--magnifying-glass icon"><use xlink:href="/assets/decidim/icons-3aa915d5f94b4c81c965610fb83a9bb50131080b92aa443d5518a8aab5b034e8.svg#icon-magnifying-glass"></use></svg>
+    <form id="form-search_topbar" action="/search" accept-charset="UTF-8" method="get"><input name="utf8" type="hidden" value="&#x2713;" />
+      <input type="text" name="term" id="term" class="m-none" placeholder="Rechercher" />
+</form>  </div>
+</div>
+
+            
+            <div class="hide-for-medium topbar__menu">
+              <button type="button" data-toggle="offCanvas">
+                <svg aria-label="Navigation" role="img" class="icon--menu icon"><use xlink:href="/assets/decidim/icons-3aa915d5f94b4c81c965610fb83a9bb50131080b92aa443d5518a8aab5b034e8.svg#icon-menu"></use></svg>
+              </button>
+            </div>
+              <div class="topbar__user show-for-medium" data-set="nav-login-holder">
+                <div class="topbar__user__login js-append">
+                    <a class="sign-up-link" href="/users/sign_up">S&#39;inscrire</a>
+                  <a class="sign-in-link" href="/users/sign_in">Se connecter</a>
+                </div>
+              </div>
+            
+          </div>
+        </div>
+        <div class="show-for-medium" data-set="nav-holder">
+          <nav class="navbar js-append">
+            <div class="row column">
+              <nav class="main-nav"><ul><li class="main-nav__link"><a href="/">Accueil</a></li><li class="main-nav__link"><a href="/processes">Projets</a></li><li class="main-nav__link"><a href="/assemblies">Assemblées</a></li><li class="main-nav__link"><a target="blank" href="https://opencollective.com/codeforfrance">Adhésion</a></li><li class="main-nav__link"><a href="/pages">A propos</a></li></ul></nav>
+            </div>
+          </nav>
+        </div>
+
+        <main>
+          
+          
+      
+  <main class="wrapper">
+  <div class="row">
+    <div class="large-8 large-centered">
+      <div class="static__message">
+        <h1 class="heading1 page-title">La page que vous recherchez ne peut être trouvée</h1>
+        <p>Cette adresse web est incorrecte ou n&#39;existe plus.</p>
+        <div class="static__message__cta">
+          <a class="button" href="/">Retour à l&#39;accueil</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+
+        </main>
+      </div><!-- /.footer-separator -->
+      <div class="main-footer">
+        <div class="row">
+          <div class="medium-8 large-6 large-offset-3 column main__footer__nav">
+              <ul class="footer-nav">
+                    <li><a href="/pages/accessibility">En savoir plus</a></li>
+
+                    <li><a href="/pages/accessibility">Comment participer ?</a></li>
+                    <li><a href="/pages/faq">A propos</a></li>
+                    <li><a href="/pages/terms-and-conditions">Mentions légales</a></li>
+                <li><a href="/open-data/download">Données ouvertes</a></li>
+              </ul>
+          </div>
+          <div class="medium-4 large-3 column main__footer__social">
+  <ul class="footer-social">
+      <li>
+        <a class="footer-social__icon" target="_blank" title="Twitter" href="https://twitter.com/CodeForFR">
+          <svg aria-label="Twitter" role="img" class="icon--twitter icon"><use xlink:href="/assets/decidim/icons-3aa915d5f94b4c81c965610fb83a9bb50131080b92aa443d5518a8aab5b034e8.svg#icon-twitter"></use></svg>
+        </a>
+      </li>
+  </ul>
+</div>
+
+        </div>
+      </div>
+      <div class="mini-footer">
+        <div class="row">
+          <div class="medium-3 large-4 column">
+            <a rel="license" class="cc-badge"
+               href="http://creativecommons.org/licenses/by-sa/4.0/"
+               target="_blank">
+              <img alt="Creative Commons License" src="/assets/decidim/cc-badge-7df25c24ce76b70a8e6a8918d35bd19a4e7c5676256370997d22a9c7039dab0c.png" />
+            </a>
+            Site réalisé par <a target="_blank" href="https://www.opensourcepolitics.eu">Open Source Politics</a> grâce à <a target="_blank" href="https://opensourcepolitics.eu/#decidim">Decidim, le logiciel libre</a> de <a target="_blank" href="https://www.opensourcepolitics.eu">démocratie participative</a>.
+          </div>
+          <div class="medium-3 large-2 column">
+            <div class="decidim-logo">
+              <a rel="decidim"
+                 href="https://decidim.org/"
+                 target="_blank">
+                <img alt="Decidim Logo" src="/assets/decidim/decidim-logo-71a2605daaf6eb8130eed18007da727a9d50e234cd9118c0a757f9dc0a36ee1a.svg" />
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!--/.off-canvas-content-->
+  </div><!--/.off-canvas-wrapper-inner-->
+</div><!--/.off-canvas-wrapper-->
+
+    <div class="reveal" id="loginModal" data-reveal>
+  <div class="reveal__header">
+    <h3 class="reveal__title">Veuillez vous connecter</h3>
+    <button class="close-button" data-close aria-label="Close modal"
+            type="button">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+    
+    <div class="row">
+      <div class="columns medium-8 medium-centered">
+        <form class="register-form new_user" id="new_user" novalidate="novalidate" data-abide="true" data-live-validate="true" data-validate-on-blur="true" action="/users/sign_in" accept-charset="UTF-8" method="post"><input name="utf8" type="hidden" value="&#x2713;" /><input type="hidden" name="authenticity_token" value="jwJBYXdOGSRlZGNwVPAs+3EMYMUJEba83P8xUiSusglSPwBaA9Wj+G0qf6Wvw2XCjjM14xfq9teEzq6jgxOx7g==" />
+          <div>
+            <div class="field">
+              <label for="user_email">email<input autofocus="autofocus" type="email" value="" name="user[email]" id="user_email" /></label>
+            </div>
+            <div class="field">
+              <label for="user_password">Mot de passe<input autocomplete="off" type="password" name="user[password]" id="user_password" /></label>
+            </div>
+          </div>
+          <div class="actions">
+            <button type="submit" name="commit" class="button expanded">Se connecter</button>
+          </div>
+</form>          <p class="text-center">
+            <a class="sign-up-link" href="/users/sign_up">S&#39;inscrire</a>
+          </p>
+        <p class="text-center">
+          <a href="/users/password/new">Mot de passe oublié?</a>
+        </p>
+      </div>
+    </div>
+</div>
+
+    <div class="reveal" id="authorizationModal" data-reveal></div>
+
+    <script type="text/javascript">
+      window.Decidim.locale = "fr";
+      window.Decidim.locale_name = "Français";
+      window.Decidim.available_locales = ["fr"];
+      window.Decidim.translatable = false;
+      window.Decidim.translatable_locales = ["fr"];
+    </script>
+    <style type="text/css" media="all">
+  :root{
+  --alert: #ec5840;--alert-rgb: 236,88,64;--primary: #cf0115;--primary-rgb: 207,1,21;--success: #57d685;--success-rgb: 87,214,133;--warning: #ffae00;--warning-rgb: 255,174,0;--secondary: #4891e2;--secondary-rgb: 72,145,226;
+  }
+</style>
+
+  </body>
+</html>

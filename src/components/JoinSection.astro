@@ -1,0 +1,67 @@
+---
+interface Props {
+  lang: 'en' | 'fr';
+}
+const { lang } = Astro.props;
+
+const formUrl =
+  'https://grist.liiib.re/o/we-make-commons/forms/8jQLgByKkyygY63dyUNn1C/13';
+
+const ways =
+  lang === 'fr'
+    ? [
+        { icon: '📣', text: 'En diffusant la campagne autour de vous' },
+        { icon: '🤝', text: 'En aidant votre communauté à soumettre ses preuves de contribution' },
+        { icon: '🌱', text: 'En accompagnant ceux qui souhaitent faire leur première contribution publique' },
+        { icon: '💰', text: 'En finançant la prochaine fournée de pin\'s et autocollants (250–500€)' },
+      ]
+    : [
+        { icon: '📣', text: 'By spreading the word about the campaign' },
+        { icon: '🤝', text: 'By helping your community submit their proof of contribution' },
+        { icon: '🌱', text: 'By supporting those who wish to make their first public contribution' },
+        { icon: '💰', text: 'By funding the next batch of pins and stickers (€250–€500)' },
+      ];
+---
+
+<section id="join" class="py-24 bg-zinc-950">
+  <div class="max-w-3xl mx-auto px-4 text-center">
+    <p class="text-wmc-yellow text-sm font-semibold tracking-widest uppercase mb-4">
+      {lang === 'fr' ? 'Rejoindre' : 'Join'}
+    </p>
+    <h2 class="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
+      {
+        lang === 'fr'
+          ? 'Votre organisation souhaite soutenir la campagne ?'
+          : 'Does your organization want to support the campaign?'
+      }
+    </h2>
+    <p class="text-zinc-400 mb-10 leading-relaxed">
+      {
+        lang === 'fr'
+          ? 'Rejoignez le mouvement en tant qu\'organisation partenaire et aidez-nous à célébrer encore plus de contributeur·ice·s.'
+          : 'Join the movement as a supporting organization and help us celebrate even more contributors.'
+      }
+    </p>
+
+    <!-- Ways to help -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-10 text-left">
+      {
+        ways.map((w) => (
+          <div class="flex items-start gap-4 bg-zinc-900 rounded-xl p-4 border border-zinc-800">
+            <span class="text-2xl flex-shrink-0 mt-0.5">{w.icon}</span>
+            <p class="text-zinc-300 text-sm leading-relaxed">{w.text}</p>
+          </div>
+        ))
+      }
+    </div>
+
+    <a
+      href={formUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center gap-2 bg-wmc-yellow text-black font-bold text-lg px-10 py-4 rounded-xl hover:scale-105 transition-transform shadow-lg shadow-yellow-400/20"
+    >
+      {lang === 'fr' ? '✉️ Remplir le formulaire' : '✉️ Fill in the form'}
+    </a>
+  </div>
+</section>
