@@ -63,5 +63,35 @@ const ways =
     >
       {lang === 'fr' ? '✉️ Remplir le formulaire' : '✉️ Fill in the form'}
     </a>
+
+    <!-- Community divider -->
+    <div class="mt-20 pt-12 border-t border-zinc-800 w-full max-w-2xl mx-auto">
+      <p class="text-zinc-500 text-xs uppercase tracking-widest mb-6">
+        {lang === 'fr' ? 'Rejoindre la communauté' : 'Join the community'}
+      </p>
+      <a
+        href="https://matrix.to/#/#communaute:osp.cat"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="group flex flex-col sm:flex-row items-center gap-5 bg-zinc-900 border border-zinc-700 hover:border-[#0DBD8B]/60 rounded-2xl px-7 py-6 transition-all hover:bg-zinc-800"
+      >
+        <!-- Matrix logo mark -->
+        <div class="flex-shrink-0 w-12 h-12 rounded-full bg-zinc-800 group-hover:bg-[#0DBD8B]/10 border border-zinc-700 group-hover:border-[#0DBD8B]/40 flex items-center justify-center transition-all text-2xl">
+          [m]
+        </div>
+        <div class="text-center sm:text-left">
+          <p class="font-semibold text-white group-hover:text-[#0DBD8B] transition-colors">
+            {lang === 'fr' ? 'Salon Matrix de la communauté' : 'Community Matrix channel'}
+            <span class="ml-2 text-zinc-500 group-hover:text-[#0DBD8B]/70 transition-colors">↗</span>
+          </p>
+          <p class="text-zinc-500 text-sm mt-1">
+            {lang === 'fr'
+              ? 'Un espace pour celles et ceux qui souhaitent aider à organiser la campagne.'
+              : 'A space for those who want to help organise the campaign.'}
+          </p>
+          <p class="text-zinc-600 text-xs mt-1.5 font-mono">#communaute:osp.cat</p>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
